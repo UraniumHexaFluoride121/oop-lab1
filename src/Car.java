@@ -80,12 +80,12 @@ public abstract class Car implements Movable {
 
     @Override
     public void turnLeft() {
-        angle = (angle - 10) % 360;
+        angle = (angle + 10) % 360;
     }
 
     @Override
     public void turnRight() {
-        angle = (angle + 10) % 360;
+        angle = (angle - 10) % 360;
     }
 
 }
