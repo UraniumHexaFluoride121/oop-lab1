@@ -1,17 +1,17 @@
 import java.awt.*;
 
 public abstract class Car {
-    private int nrDoors; // Number of doors on the car
+    private final int nrDoors; // Number of doors on the car
     protected final double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
 
-    public Car() {
-        nrDoors = 2;
-        enginePower = 125;
-        color = Color.red;
-        modelName = "Saab95";
+    public Car(int nrDoors, double enginePower, Color color, String modelName) {
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
         stopEngine();
     }
 
