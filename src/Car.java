@@ -1,17 +1,18 @@
 import java.awt.*;
 
 public abstract class Car {
-    public int nrDoors; // Number of doors on the car
-    public double enginePower; // Engine power of the car
-    public double currentSpeed; // The current speed of the car
-    public Color color; // Color of the car
-    public String modelName; // The car model name
+    private int nrDoors; // Number of doors on the car
+    protected final double enginePower; // Engine power of the car
+    protected double currentSpeed; // The current speed of the car
+    private Color color; // Color of the car
+    public final String modelName; // The car model name
 
     public Car() {
         nrDoors = 2;
         enginePower = 125;
         color = Color.red;
         modelName = "Saab95";
+        stopEngine();
     }
 
     public int getNrDoors() {
