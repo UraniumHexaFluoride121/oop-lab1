@@ -6,6 +6,7 @@ public abstract class Car implements Movable {
     protected double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
+    private double angle = 0, x = 0, y = 0;
 
     public Car(int nrDoors, double enginePower, Color color, String modelName) {
         this.nrDoors = nrDoors;
@@ -47,15 +48,44 @@ public abstract class Car implements Movable {
 
     protected abstract void decrementSpeed(double amount);
 
-    public abstract double speedFactor();
+    protected abstract double speedFactor();
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
 
     // TODO fix this method according to lab pm
     public void gas(double amount) {
+        if (amount < 0 || amount > 1)
+            throw new IllegalArgumentException();
         incrementSpeed(amount);
     }
 
     // TODO fix this method according to lab pm
     public void brake(double amount) {
+        if (amount < 0 || amount > 1)
+            throw new IllegalArgumentException();
         decrementSpeed(amount);
     }
+
+    @Override
+    public void move() {
+        x += Math.cos(Math.toRadians(angle)) * currentSpeed;
+        y += Math.sin(Math.toRadians(angle)) * currentSpeed;
+    }
+
+    @Override
+    public void turnLeft() {
+        angle = (angle - 10) % 360;
+    }
+
+    @Override
+    public void turnRight() {
+        angle = (angle + 10) % 360;
+    }
+
 }

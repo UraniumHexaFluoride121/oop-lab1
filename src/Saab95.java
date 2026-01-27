@@ -9,7 +9,7 @@ public class Saab95 extends Car {
     }
 
     @Override
-    public double speedFactor() {
+    protected double speedFactor() {
         double turbo = 1;
         if (turboOn) turbo = 1.3;
         return enginePower * 0.01 * turbo;
@@ -21,8 +21,8 @@ public class Saab95 extends Car {
     }
 
     @Override
-    public void decrementSpeed(double amount) {
-        currentSpeed = getCurrentSpeed() - speedFactor() * amount;
+    protected void decrementSpeed(double amount) {
+        currentSpeed = Math.max(0, getCurrentSpeed() - speedFactor() * amount);
     }
 
     public void setTurboOn() {
