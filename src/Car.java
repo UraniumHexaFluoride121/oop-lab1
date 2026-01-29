@@ -2,8 +2,8 @@ import java.awt.*;
 
 public abstract class Car implements Movable {
     private final int nrDoors; // Number of doors on the car
-    protected final double enginePower; // Engine power of the car
-    protected double currentSpeed; // The current speed of the car
+    private final double enginePower; // Engine power of the car
+    private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
     private double angle = 0, x = 0, y = 0;
@@ -44,10 +44,14 @@ public abstract class Car implements Movable {
         currentSpeed = 0;
     }
 
-    protected abstract void incrementSpeed(double amount);
 
-    protected abstract void decrementSpeed(double amount);
+    private void incrementSpeed(double amount) {
+        currentSpeed = Math.min(enginePower, getCurrentSpeed() + speedFactor() * amount);
+    }
 
+    private void decrementSpeed(double amount) {
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
+    }
     protected abstract double speedFactor();
 
     public double getX() {
@@ -58,14 +62,12 @@ public abstract class Car implements Movable {
         return y;
     }
 
-    // TODO fix this method according to lab pm
     public void gas(double amount) {
         if (amount < 0 || amount > 1)
             throw new IllegalArgumentException();
         incrementSpeed(amount);
     }
 
-    // TODO fix this method according to lab pm
     public void brake(double amount) {
         if (amount < 0 || amount > 1)
             throw new IllegalArgumentException();
@@ -80,12 +82,12 @@ public abstract class Car implements Movable {
 
     @Override
     public void turnLeft() {
-        angle = (angle + 10) % 360;
+        angle = (angle + 90) % 360;
     }
 
     @Override
     public void turnRight() {
-        angle = (angle - 10) % 360;
+        angle = (angle - 90) % 360;
     }
 
 }
