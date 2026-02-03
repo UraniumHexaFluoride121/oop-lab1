@@ -9,11 +9,13 @@ import static org.junit.Assert.*;
 public class TestCar {
     private Saab95 saab;
     private Volvo240 volvo;
+    private Scania scania;
 
     @Before
     public void init() {
         saab = new Saab95();
         volvo = new Volvo240();
+        scania = new Scania();
     }
 
     @Test
@@ -88,6 +90,20 @@ public class TestCar {
         saab.brake(0.2);
         assertTrue(currentVolvoSpeed > volvo.getCurrentSpeed());
         assertTrue(currentSaabSpeed > saab.getCurrentSpeed());
+    }
+
+    @Test
+    public void testBed(){
+        scania.startEngine();
+        scania.raiseBed(20);
+        assertEquals(0, scania.getBedAngle());
+
+        scania.stopEngine();
+        scania.raiseBed(20);
+        assertEquals(20, scania.getBedAngle());
+
+        scania.lowerBed(30);
+        assertEquals(0, scania.getBedAngle());
     }
 
 
