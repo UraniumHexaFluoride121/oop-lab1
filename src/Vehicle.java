@@ -1,19 +1,27 @@
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Vehicle implements Movable, Storable {
     private final int nrDoors; // Number of doors on the car
     private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
     private double angle = 0, x = 0, y = 0;
+    private IStorage<?> transport = null;
+    private final double weight;
 
-    public Car(int nrDoors, double enginePower, Color color, String modelName) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
+        this.weight = weight;
         stopEngine();
+    }
+
+    @Override
+    public double getWeight() {
+        return weight;
     }
 
     public int getNrDoors() {
@@ -44,7 +52,6 @@ public abstract class Car implements Movable {
         currentSpeed = 0;
     }
 
-
     private void incrementSpeed(double amount) {
         currentSpeed = Math.min(enginePower, getCurrentSpeed() + speedFactor() * amount);
     }
@@ -52,13 +59,20 @@ public abstract class Car implements Movable {
     private void decrementSpeed(double amount) {
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
-    protected abstract double speedFactor();
+
+    protected double speedFactor() {
+        return getEnginePower() * 0.01;
+    }
 
     public double getX() {
+        if (isBeingStored())
+            return transport.getX();
         return x;
     }
 
     public double getY() {
+        if (isBeingStored())
+            return transport.getY();
         return y;
     }
 
@@ -90,4 +104,20 @@ public abstract class Car implements Movable {
         angle = (angle - 90) % 360;
     }
 
+    @Override
+    public void store(IStorage<?> t) {
+        transport = t;
+    }
+
+    @Override
+    public void remove(IStorage<?> t) {
+        x = getX() - 1;
+        y = getY();
+        transport = null;
+    }
+
+    @Override
+    public boolean isBeingStored() {
+        return transport != null;
+    }
 }

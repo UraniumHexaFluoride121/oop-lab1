@@ -1,0 +1,48 @@
+import java.util.Stack;
+import java.util.function.Supplier;
+
+public class Storage<T extends Storable> implements IStorage<T> {
+    private final int maxStorage;
+    private final double maxWeight;
+    private final Supplier<Double> x, y;
+    private final Stack<T> storage = new Stack<>();
+
+    public Storage(int maxStorage, double maxWeight, Supplier<Double> x, Supplier<Double> y) {
+        this.x = x;
+        this.y = y;
+        this.maxStorage = maxStorage;
+        this.maxWeight = maxWeight;
+    }
+
+    @Override
+    public void load(T t) {
+        if (t.isBeingStored())
+            return;
+        if (t.getWeight() > maxWeight)
+            return;
+        if (storage.size() >= maxStorage)
+            return;
+        if (t.getX() * t.getX() + t.getY() * t.getY() < 2 * 2) {
+            storage.push(t);
+            t.store(this);
+        }
+    }
+
+    @Override
+    public void unload() {
+        if (storage.isEmpty())
+            return;
+        Storable t = storage.pop();
+        t.remove(this);
+    }
+
+    @Override
+    public double getX() {
+        return x.get();
+    }
+
+    @Override
+    public double getY() {
+        return y.get();
+    }
+}

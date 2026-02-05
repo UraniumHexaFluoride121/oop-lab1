@@ -1,0 +1,23 @@
+public interface Storable {
+    /**
+     * Register this {@code Storable} as being stored in the specified {@code IStorage}.
+     * Should only be called from {@code IStorage.load()}
+     * @param t The {@code IStorage} that is now storing this item
+     */
+    void store(IStorage<?> t);
+
+    /**
+     * Remove this {@code Storable} as from the specified {@code IStorage}.
+     * Should only be called from {@code IStorage.unload()}
+     * @param t The {@code IStorage} that is now no longer storing this item
+     */
+    void remove(IStorage<?> t);
+    double getX();
+    double getY();
+    double getWeight();
+
+    /**
+     * @return Whether this item is currently registered to an {@code IStorage}
+     */
+    boolean isBeingStored();
+}

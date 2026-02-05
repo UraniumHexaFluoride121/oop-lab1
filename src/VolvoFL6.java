@@ -1,0 +1,40 @@
+import java.awt.*;
+
+public class VolvoFL6 extends VehicleWithBed implements IStorage<Storable> {
+    private boolean isRaised = true;
+    private final Storage<Storable> storage = new Storage<>(2, 2.5, this::getX, this::getY);
+
+    public VolvoFL6() {
+        super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12);
+    }
+
+    @Override
+    public boolean bedPositionBlocksDriving() {
+        return !isRaised;
+    }
+
+    @Override
+    public void raise() {
+        isRaised = true;
+    }
+
+    @Override
+    public void lower() {
+        if (canBedMove())
+            isRaised = false;
+    }
+
+    @Override
+    public void load(Storable t) {
+        if (isRaised)
+            return;
+        storage.load(t);
+    }
+
+    @Override
+    public void unload() {
+        if (isRaised)
+            return;
+        storage.unload();
+    }
+}

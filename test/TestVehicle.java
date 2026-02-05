@@ -6,14 +6,18 @@ import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 
-public class TestCar {
+public class TestVehicle {
     private Saab95 saab;
     private Volvo240 volvo;
+    private Scania scania;
+    private VolvoFL6 volvoTruck;
 
     @Before
     public void init() {
         saab = new Saab95();
         volvo = new Volvo240();
+        scania = new Scania();
+        volvoTruck = new VolvoFL6();
     }
 
     @Test
@@ -112,6 +116,65 @@ public class TestCar {
         volvo.move();
         testPosition(notEqual(0), notEqual(0)); // Ska ha rört sig i både x- och y-led
     }
+
+
+    @Test
+    public void testBedDriving() {
+        scania.startEngine();
+        scania.move();
+        assertFalse(scania.canBedMove());
+
+        scania.stopEngine();
+        scania.raise();
+        double currentX = scania.getX();
+        double currentY = scania.getY();
+
+        scania.startEngine();
+        scania.move();
+        scania.turnLeft();
+        scania.move();
+        scania.move();
+
+        assertEquals(scania.getX(), currentX, 0.00001);
+        assertEquals(scania.getY(), currentY, 0.00001);
+
+    }
+
+    @Test
+    public void storeCar(){
+        volvoTruck.lower();
+        volvoTruck.load(saab);
+        volvoTruck.raise();
+        volvoTruck.startEngine();
+        volvoTruck.gas(1);
+
+        // drive an arbitrary distance
+        volvoTruck.move();
+        volvoTruck.turnLeft();
+        volvoTruck.move();
+        volvoTruck.move();
+
+        assertEquals(volvoTruck.getX(), saab.getX(), 0.00001);
+        assertEquals(volvoTruck.getY(), saab.getY(), 0.00001);
+
+        volvoTruck.stopEngine();
+        volvoTruck.lower();
+        volvoTruck.unload();
+        volvoTruck.raise();
+        volvoTruck.startEngine();
+
+        volvoTruck.gas(1);
+        volvoTruck.move();
+        volvoTruck.turnLeft();
+        volvoTruck.move();
+        volvoTruck.move();
+
+        assertNotEquals(volvoTruck.getX(), saab.getX(), 0.00001);
+        assertNotEquals(volvoTruck.getY(), saab.getY(), 0.00001);
+
+    }
+
+
 
     private void testPosition(Predicate<Double> xCondition, Predicate<Double> yCondition) {
         assertTrue(xCondition.test(saab.getX()));
