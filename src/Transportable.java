@@ -1,5 +1,5 @@
 public interface Transportable {
-    void transport(VehicleShell vehicle);
+    void transport(CarTransport vehicle);
     void unload(VehicleShell vehicle);
     double getX();
     double getY();

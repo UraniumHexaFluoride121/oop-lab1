@@ -23,8 +23,4 @@ public class Scania extends Truck{
         int newAngle = getBedAngle() - degrees;
         setBedAngle(Math.max(newAngle, 0));
     }
-
-
-
-
 }
