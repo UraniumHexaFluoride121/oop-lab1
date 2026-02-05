@@ -10,12 +10,14 @@ public class TestCar {
     private Saab95 saab;
     private Volvo240 volvo;
     private Scania scania;
+    private VolvoFL6 volvoTruck;
 
     @Before
     public void init() {
         saab = new Saab95();
         volvo = new Volvo240();
         scania = new Scania();
+        volvoTruck = new VolvoFL6();
     }
 
     @Test
@@ -128,6 +130,42 @@ public class TestCar {
         volvo.move();
         testPosition(notEqual(0), notEqual(0)); // Ska ha rört sig i både x- och y-led
     }
+
+
+    @Test
+    public void transportCar(){
+        volvoTruck.lowerBed();
+        volvoTruck.loadCar(saab);
+        volvoTruck.raiseBed();
+        volvoTruck.startEngine();
+        volvoTruck.gas(1);
+
+        // drive an arbitrary distance
+        volvoTruck.move();
+        volvoTruck.turnLeft();
+        volvoTruck.move();
+        volvoTruck.move();
+
+        assertEquals(volvoTruck.getX(), saab.getX(), 0.00001);
+        assertEquals(volvoTruck.getY(), saab.getY(), 0.00001);
+
+        volvoTruck.stopEngine();
+        volvoTruck.lowerBed();
+        volvoTruck.releaseCar();
+        volvoTruck.raiseBed();
+        volvoTruck.startEngine();
+        
+        volvoTruck.gas(1);
+        volvoTruck.move();
+        volvoTruck.turnLeft();
+        volvoTruck.move();
+        volvoTruck.move();
+
+        assertNotEquals(volvoTruck.getX(), saab.getX(), 0.00001);
+        assertNotEquals(volvoTruck.getY(), saab.getY(), 0.00001);
+
+    }
+
 
     private void testPosition(Predicate<Double> xCondition, Predicate<Double> yCondition) {
         assertTrue(xCondition.test(saab.getX()));

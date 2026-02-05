@@ -1,40 +1,40 @@
 import java.awt.*;
-import java.util.Objects;
 import java.util.Stack;
 
-public class VolvoFL6 extends Car{
-    private int bedAngle;
+public class VolvoFL6 extends Truck implements CarTransport{
     private final int maxCars = 4;
     private int nrOfCars = 0;
-    private Stack<Car> loadedCars;
+    private final Stack<Transportable> loadedCars;
 
     public VolvoFL6() {
         super(2, 100, Color.blue, "VolvoFL6");
-        bedAngle = 0;
-        Stack<Car> loadedCars = new Stack<Car>();
+        this.loadedCars = new Stack<Transportable>();
     }
 
     @Override
     protected double speedFactor() {
-        return 1;
+        return getEnginePower()*0.01;
     }
 
     public void raiseBed() {
         if (getCurrentSpeed() == 0){
-            bedAngle = 70;
+            setBedAngle(0);
         }
     }
 
     public void lowerBed() {
-        bedAngle = 0;
+        if (getCurrentSpeed() == 0) {
+            setBedAngle(1);
+        }
     }
 
-    public int getBedAngle() {
-        return bedAngle;
+    public Stack<Transportable> getLoadedCars(){
+        return loadedCars;
     }
 
-    public void loadCar(Car car){
-        if (bedAngle == 0 && (Math.abs(getX() - car.getX()) < 10 && (Math.abs(getY() - car.getY()) < 10 && !Objects.equals(car.modelName, "VolvoFL6")))){
+    @Override
+    public void loadCar(Transportable car){
+        if (getBedAngle() == 1 && (Math.abs(getX() - car.getX()) < 10 && (Math.abs(getY() - car.getY()) < 10))){
             if (nrOfCars < maxCars){
                 loadedCars.push(car);
                 nrOfCars++;
@@ -42,16 +42,25 @@ public class VolvoFL6 extends Car{
         }
     }
 
-    public void releaseCar(Car car){
+    @Override
+    public void releaseCar(){
+        if (nrOfCars > 0 && getBedAngle() == 1){
+            Transportable car = loadedCars.pop();
+            nrOfCars--;
+            car.unload(this);
+        }
+        else{ // proper error probably needed
+            System.out.println("no");
+        }
 
     }
 
     @Override
     public void move(){
-        if (bedAngle == 0){
+        if (getBedAngle() == 0){
             super.move();
-            for(Car car : loadedCars){
-                car.move();
+            for(Transportable car : loadedCars){
+                car.transport(this);
             }
         }
     }
