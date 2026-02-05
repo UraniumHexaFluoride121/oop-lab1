@@ -7,7 +7,7 @@ public abstract class Vehicle implements Movable, Storable {
     private Color color; // Color of the car
     public final String modelName; // The car model name
     private double angle = 0, x = 0, y = 0;
-    private IStorage<?> transport = null;
+    private IStorage<?> storage = null;
     private final double weight;
 
     public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight) {
@@ -60,28 +60,41 @@ public abstract class Vehicle implements Movable, Storable {
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
 
+    /**
+     * Any change in speed should be multiplied by the scaling factor provided by this method.
+     */
     protected double speedFactor() {
         return getEnginePower() * 0.01;
     }
 
     public double getX() {
         if (isBeingStored())
-            return transport.getX();
+            return storage.getX();
         return x;
     }
 
     public double getY() {
         if (isBeingStored())
-            return transport.getY();
+            return storage.getY();
         return y;
     }
 
+    /**
+     * Tries to increase the speed of this vehicle.
+     * @param amount The amount to gas
+     * @throws IllegalArgumentException If {@code amount} is less than zero or more than one
+     */
     public void gas(double amount) {
         if (amount < 0 || amount > 1)
             throw new IllegalArgumentException();
         incrementSpeed(amount);
     }
 
+    /**
+     * Tries to decrease the speed of this vehicle. This method will never drop the speed below zero.
+     * @param amount The amount to brake
+     * @throws IllegalArgumentException If {@code amount} is less than zero or more than one
+     */
     public void brake(double amount) {
         if (amount < 0 || amount > 1)
             throw new IllegalArgumentException();
@@ -106,18 +119,18 @@ public abstract class Vehicle implements Movable, Storable {
 
     @Override
     public void store(IStorage<?> t) {
-        transport = t;
+        storage = t;
     }
 
     @Override
     public void remove(IStorage<?> t) {
         x = getX() - 1;
         y = getY();
-        transport = null;
+        storage = null;
     }
 
     @Override
     public boolean isBeingStored() {
-        return transport != null;
+        return storage != null;
     }
 }

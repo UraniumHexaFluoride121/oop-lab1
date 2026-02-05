@@ -7,6 +7,14 @@ public class Storage<T extends Storable> implements IStorage<T> {
     private final Supplier<Double> x, y;
     private final Stack<T> storage = new Stack<>();
 
+    /**
+     * Creates a new {@code Storage}
+     *
+     * @param maxStorage The maximum number of items that can be stored.
+     * @param maxWeight  The maximum weight of any individual item that is allowed to be stored
+     * @param x          Provides the current x position of this storage
+     * @param y          Provides the current y position of this storage
+     */
     public Storage(int maxStorage, double maxWeight, Supplier<Double> x, Supplier<Double> y) {
         this.x = x;
         this.y = y;
