@@ -12,7 +12,19 @@ public interface Storable {
      * @param t The {@code IStorage} that is now no longer storing this item
      */
     void remove(IStorage<?> t);
+
+    /**
+     * If registered to an {@code IStorage}, this method should return the storage's x
+     * position
+     * @return The current x position
+     */
     double getX();
+
+    /**
+     * If registered to an {@code IStorage}, this method should return the storage's y
+     * position
+     * @return The current y position
+     */
     double getY();
     double getWeight();
 
