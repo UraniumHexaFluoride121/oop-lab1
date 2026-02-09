@@ -11,6 +11,7 @@ public class TestVehicle {
     private Volvo240 volvo;
     private Scania scania;
     private VolvoFL6 volvoTruck;
+    private Workshop<Saab95> saab95Workshop;
 
     @Before
     public void init() {
@@ -18,6 +19,7 @@ public class TestVehicle {
         volvo = new Volvo240();
         scania = new Scania();
         volvoTruck = new VolvoFL6();
+        saab95Workshop = new Workshop<>(2, 4, 0,0);
     }
 
     @Test
@@ -171,6 +173,21 @@ public class TestVehicle {
 
         assertNotEquals(volvoTruck.getX(), saab.getX(), 0.00001);
         assertNotEquals(volvoTruck.getY(), saab.getY(), 0.00001);
+
+    }
+
+    @Test
+    public void workshopLoading(){ // tests workshop and a vehicles ability to move inside a storage
+        saab95Workshop.load(saab);
+        saab.startEngine();
+        saab.move();
+        assertEquals(0, saab.getX(), 0.00001);
+        assertEquals(0, saab.getY(), 0.00001);
+        saab95Workshop.unload();
+
+        saab.startEngine();
+        saab.move();
+        assertNotEquals(    0, saab.getX(), 0.00001);
 
     }
 
