@@ -173,7 +173,6 @@ public class TestVehicle {
 
         assertNotEquals(volvoTruck.getX(), saab.getX(), 0.00001);
         assertNotEquals(volvoTruck.getY(), saab.getY(), 0.00001);
-
     }
 
     @Test
