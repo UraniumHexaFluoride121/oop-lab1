@@ -1,8 +1,8 @@
 import java.awt.*;
 
-public class VolvoFL6 extends VehicleWithBed implements IStorage<Storable> {
+public class VolvoFL6 extends VehicleWithBed implements IStorage<Vehicle> {
     private boolean isRaised = true;
-    private final Storage<Storable> storage = new Storage<>(2, 2.5, this::getX, this::getY);
+    private final Storage<Vehicle> storage = new Storage<>(2, 2.5, this::getX, this::getY);
 
     public VolvoFL6() {
         super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12);
@@ -25,7 +25,7 @@ public class VolvoFL6 extends VehicleWithBed implements IStorage<Storable> {
     }
 
     @Override
-    public void load(Storable t) {
+    public void load(Vehicle t) {
         if (isRaised)
             return;
         storage.load(t);

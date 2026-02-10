@@ -1,4 +1,4 @@
-public class Workshop<T extends Storable> implements IStorage<T> {
+public class Workshop<T extends Vehicle> implements IStorage<T> {
     private final Storage<T> storage;
     private final int x, y;
 
