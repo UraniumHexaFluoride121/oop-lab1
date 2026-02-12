@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.*;
 
 public abstract class Vehicle implements Movable, Storable {
@@ -6,16 +8,18 @@ public abstract class Vehicle implements Movable, Storable {
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
-    private double angle = 0, x = 0, y = 0;
+    private double angle = 0, x, y;
     private IStorage<?> storage = null;
     private final double weight;
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight, double x, double y) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
         this.weight = weight;
+        this.x = x;
+        this.y = y;
         stopEngine();
     }
 

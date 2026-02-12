@@ -1,3 +1,5 @@
+package main;
+
 import java.util.Stack;
 import java.util.function.Supplier;
 
@@ -30,10 +32,8 @@ public class Storage<T extends Storable> implements IStorage<T> {
             return;
         if (storage.size() >= maxStorage)
             return;
-        if (t.getX() * t.getX() + t.getY() * t.getY() < 2 * 2) {
-            storage.push(t);
-            t.store(this);
-        }
+        storage.push(t);
+        t.store(this);
     }
 
     @Override

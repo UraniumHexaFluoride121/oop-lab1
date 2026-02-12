@@ -1,3 +1,5 @@
+package main;
+
 public interface Movable {
     /**
      * Moves object based on its current state, such as speed and angle.

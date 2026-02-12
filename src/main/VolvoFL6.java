@@ -1,11 +1,13 @@
+package main;
+
 import java.awt.*;
 
 public class VolvoFL6 extends VehicleWithBed implements IStorage<Vehicle> {
     private boolean isRaised = true;
     private final Storage<Vehicle> storage = new Storage<>(2, 2.5, this::getX, this::getY);
 
-    public VolvoFL6() {
-        super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12);
+    public VolvoFL6(double x, double y) {
+        super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12, x, y);
     }
 
     @Override

@@ -1,8 +1,10 @@
+package main;
+
 import java.awt.*;
 
 public abstract class VehicleWithBed extends Vehicle implements HasBed {
-    public VehicleWithBed(int nrDoors, double enginePower, Color color, String modelName, double weight) {
-        super(nrDoors, enginePower, color, modelName, weight);
+    public VehicleWithBed(int nrDoors, double enginePower, Color color, String modelName, double weight, double x, double y) {
+        super(nrDoors, enginePower, color, modelName, weight, x, y);
     }
 
     /**

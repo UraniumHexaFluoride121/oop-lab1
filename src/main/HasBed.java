@@ -1,3 +1,5 @@
+package main;
+
 public interface HasBed {
     /**
      * Raise the bed. If {@code canBedMove()} is false, this method has no effect.

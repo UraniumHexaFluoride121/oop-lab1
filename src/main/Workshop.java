@@ -1,8 +1,12 @@
+package main;
+
 public class Workshop<T extends Vehicle> implements IStorage<T> {
     private final Storage<T> storage;
     private final int x, y;
+    private final Class<T> clazz;
 
-    public Workshop(int maxStorage, double maxWeight, int x, int y) {
+    public Workshop(int maxStorage, double maxWeight, int x, int y, Class<T> clazz) {
+        this.clazz = clazz;
         storage = new Storage<>(maxStorage, maxWeight, this::getX, this::getY);
         this.x = x;
         this.y = y;
@@ -16,6 +20,11 @@ public class Workshop<T extends Vehicle> implements IStorage<T> {
     @Override
     public void unload() {
         storage.unload();
+    }
+
+    public void tryLoad(Object v) {
+        if (clazz.isInstance(v))
+            load((T) v);
     }
 
     @Override

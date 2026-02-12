@@ -1,10 +1,12 @@
+package main;
+
 import java.awt.*;
 
 public class Scania extends VehicleWithBed {
     private double angle = 0;
 
-    public Scania() {
-        super(2, 100, new Color(0x09, 0xCD, 0xDA), "Scania", 15);
+    public Scania(double x, double y) {
+        super(2, 100, new Color(0x09, 0xCD, 0xDA), "Scania", 15, x, y);
     }
 
     public double getAngle() {

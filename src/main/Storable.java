@@ -1,3 +1,5 @@
+package main;
+
 public interface Storable {
     /**
      * Register this {@code Storable} as being stored in the specified {@code IStorage}.

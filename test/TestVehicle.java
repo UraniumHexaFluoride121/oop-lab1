@@ -1,3 +1,4 @@
+import main.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +16,11 @@ public class TestVehicle {
 
     @Before
     public void init() {
-        saab = new Saab95();
-        volvo = new Volvo240();
-        scania = new Scania();
-        volvoTruck = new VolvoFL6();
-        saab95Workshop = new Workshop<>(2, 4, 0,0);
+        saab = new Saab95(0,0);
+        volvo = new Volvo240(0,0);
+        scania = new Scania(0,0);
+        volvoTruck = new VolvoFL6(0,0);
+        saab95Workshop = new Workshop<>(2, 4, 0,0, Saab95.class);
     }
 
     @Test

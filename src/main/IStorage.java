@@ -1,3 +1,5 @@
+package main;
+
 /**
  * This interface defines a first-in-last-out collection of {@code Storable} items, that also has a position.
  * Items that are already registered to an {@code IStorage} may not be inserted.
