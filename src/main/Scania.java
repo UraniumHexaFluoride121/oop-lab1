@@ -5,8 +5,8 @@ import java.awt.*;
 public class Scania extends VehicleWithBed {
     private double angle = 0;
 
-    public Scania(double x, double y) {
-        super(2, 100, new Color(0x09, 0xCD, 0xDA), "Scania", 15, x, y);
+    public Scania(double x, double y, String licensePlate) {
+        super(2, 100, new Color(0x09, 0xCD, 0xDA), "Scania", 15, x, y, licensePlate);
     }
 
     public double getAngle() {

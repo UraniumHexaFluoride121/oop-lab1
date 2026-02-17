@@ -1,13 +1,15 @@
 package main;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class Storage<T extends Storable> implements IStorage<T> {
     private final int maxStorage;
     private final double maxWeight;
     private final Supplier<Double> x, y;
-    private final Stack<T> storage = new Stack<>();
+    private final ArrayList<T> storage = new ArrayList<>();
 
     /**
      * Creates a new {@code Storage}
@@ -32,7 +34,7 @@ public class Storage<T extends Storable> implements IStorage<T> {
             return;
         if (storage.size() >= maxStorage)
             return;
-        storage.push(t);
+        storage.addFirst(t);
         t.store(this);
     }
 
@@ -40,9 +42,20 @@ public class Storage<T extends Storable> implements IStorage<T> {
     public void unload() {
         if (storage.isEmpty())
             return;
-        Storable t = storage.pop();
+        Storable t = storage.removeFirst();
         t.remove(this);
     }
+
+    @Override
+    public void unload(String id) {
+        Optional<T> t = storage.stream().filter(o -> Objects.equals(o.getID(), id)).findFirst();
+        if (t.isEmpty())
+            return;
+        storage.remove(t.get());
+        t.get().remove(this);
+
+    }
+
 
     @Override
     public double getX() {

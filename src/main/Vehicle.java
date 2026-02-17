@@ -11,8 +11,9 @@ public abstract class Vehicle implements Movable, Storable {
     private double angle = 0, x, y;
     private IStorage<?> storage = null;
     private final double weight;
+    private final String id;
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight, double x, double y) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight, double x, double y, String licensePlate) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -20,8 +21,12 @@ public abstract class Vehicle implements Movable, Storable {
         this.weight = weight;
         this.x = x;
         this.y = y;
+        this.id = licensePlate;
         stopEngine();
     }
+
+    @Override
+    public String getID() {return id;}
 
     @Override
     public double getWeight() {

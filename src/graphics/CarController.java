@@ -42,9 +42,9 @@ public class CarController {
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
-        cc.addCar("Volvo240", new Volvo240(0, 0));
-        cc.addCar("Saab95", new Saab95(0, 100));
-        cc.addCar("Scania", new Scania(0, 200));
+        cc.addCar("Volvo240", new Volvo240(0, 280, "1"));
+        cc.addCar("Saab95", new Saab95(0, 100, "2"));
+        cc.addCar("Scania", new Scania(0, 200, "3"));
 
         cc.addWorkshop("VolvoBrand", new Workshop<>(3, 20, 300, 300, Volvo240.class));
 

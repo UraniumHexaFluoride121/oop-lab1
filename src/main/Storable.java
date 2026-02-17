@@ -45,4 +45,7 @@ public interface Storable {
      * @return Whether this item is currently registered to an {@code IStorage}
      */
     boolean isBeingStored();
+
+    String getID();
+
 }

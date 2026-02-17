@@ -22,6 +22,10 @@ public interface IStorage<T extends Storable> {
      */
     void unload();
 
+
+    void unload(String id);
+
+
     /**
      * Returns the storage's x position
      */

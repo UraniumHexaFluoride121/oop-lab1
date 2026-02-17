@@ -5,8 +5,8 @@ import java.awt.*;
 public class Saab95 extends Vehicle {
     private boolean turboOn;
 
-    public Saab95(double x, double y) {
-        super(2, 125, Color.RED, "Saab95", 2, x, y);
+    public Saab95(double x, double y, String licensePlate) {
+        super(2, 125, Color.RED, "Saab95", 2, x, y, licensePlate);
         turboOn = false;
     }
 

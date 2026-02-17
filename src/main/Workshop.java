@@ -22,6 +22,9 @@ public class Workshop<T extends Vehicle> implements IStorage<T> {
         storage.unload();
     }
 
+    @Override
+    public void unload(String id) { storage.unload(id); }
+
     public void tryLoad(Object v) {
         if (clazz.isInstance(v))
             load((T) v);

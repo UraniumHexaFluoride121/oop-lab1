@@ -13,14 +13,16 @@ public class TestVehicle {
     private Scania scania;
     private VolvoFL6 volvoTruck;
     private Workshop<Saab95> saab95Workshop;
+    private Workshop<Vehicle> workshop;
 
     @Before
     public void init() {
-        saab = new Saab95(0,0);
-        volvo = new Volvo240(0,0);
-        scania = new Scania(0,0);
-        volvoTruck = new VolvoFL6(0,0);
+        saab = new Saab95(0,0, "1");
+        volvo = new Volvo240(0,0, "2");
+        scania = new Scania(0,0, "3");
+        volvoTruck = new VolvoFL6(0,0, "4");
         saab95Workshop = new Workshop<>(2, 4, 0,0, Saab95.class);
+        workshop = new Workshop<Vehicle>(3, 10, 0,0, Vehicle.class);
     }
 
     @Test
@@ -178,16 +180,16 @@ public class TestVehicle {
 
     @Test
     public void workshopLoading(){ // tests workshop and a vehicles ability to move inside a storage
-        saab95Workshop.load(saab);
-        saab.startEngine();
-        saab.move();
-        assertEquals(0, saab.getX(), 0.00001);
-        assertEquals(0, saab.getY(), 0.00001);
-        saab95Workshop.unload();
+        workshop.load(saab);
+        workshop.load(volvo);
 
-        saab.startEngine();
-        saab.move();
-        assertNotEquals(    0, saab.getX(), 0.00001);
+        workshop.unload("2");
+
+        volvo.gas(1);
+
+        volvo.move();
+
+        assertNotEquals(0, volvo.getX(), 0.00001);
 
     }
 

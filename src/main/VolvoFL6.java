@@ -6,8 +6,8 @@ public class VolvoFL6 extends VehicleWithBed implements IStorage<Vehicle> {
     private boolean isRaised = true;
     private final Storage<Vehicle> storage = new Storage<>(2, 2.5, this::getX, this::getY);
 
-    public VolvoFL6(double x, double y) {
-        super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12, x, y);
+    public VolvoFL6(double x, double y, String licensePlate) {
+        super(2, 102.7, new Color(88, 116, 209), "VolvoFL6", 12, x, y, licensePlate);
     }
 
     @Override
@@ -38,5 +38,10 @@ public class VolvoFL6 extends VehicleWithBed implements IStorage<Vehicle> {
         if (isRaised)
             return;
         storage.unload();
+    }
+
+    @Override
+    public void unload(String id) {
+        throw new UnsupportedOperationException();
     }
 }
