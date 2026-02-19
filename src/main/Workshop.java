@@ -18,12 +18,14 @@ public class Workshop<T extends Vehicle> implements IStorage<T> {
     }
 
     @Override
-    public void unload() {
-        storage.unload();
+    public T unload() {
+        return storage.unload();
     }
 
     @Override
-    public void unload(String id) { storage.unload(id); }
+    public T unload(String id) {
+        return storage.unload(id);
+    }
 
     public void tryLoad(Object v) {
         if (clazz.isInstance(v))

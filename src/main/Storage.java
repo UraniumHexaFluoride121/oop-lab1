@@ -39,21 +39,22 @@ public class Storage<T extends Storable> implements IStorage<T> {
     }
 
     @Override
-    public void unload() {
+    public T unload() {
         if (storage.isEmpty())
-            return;
-        Storable t = storage.removeFirst();
+            return null;
+        T t = storage.removeFirst();
         t.remove(this);
+        return t;
     }
 
     @Override
-    public void unload(String id) {
+    public T unload(String id) {
         Optional<T> t = storage.stream().filter(o -> Objects.equals(o.getID(), id)).findFirst();
         if (t.isEmpty())
-            return;
+            return null;
         storage.remove(t.get());
         t.get().remove(this);
-
+        return t.get();
     }
 
 

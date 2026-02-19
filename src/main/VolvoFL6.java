@@ -34,14 +34,14 @@ public class VolvoFL6 extends VehicleWithBed implements IStorage<Vehicle> {
     }
 
     @Override
-    public void unload() {
+    public Vehicle unload() {
         if (isRaised)
-            return;
-        storage.unload();
+            return null;
+        return storage.unload();
     }
 
     @Override
-    public void unload(String id) {
+    public Vehicle unload(String id) {
         throw new UnsupportedOperationException();
     }
 }

@@ -46,6 +46,9 @@ public interface Storable {
      */
     boolean isBeingStored();
 
+    /**
+     * Returns the id for the item used to identify it when placed in a storage
+     */
     String getID();
 
 }

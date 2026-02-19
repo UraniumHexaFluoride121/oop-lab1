@@ -1,7 +1,8 @@
 package main;
 
 /**
- * This interface defines a first-in-last-out collection of {@code Storable} items, that also has a position.
+ * This interface defines a first-in-last-out collection of {@code Storable} items that also have position and id attributes.
+ * Certain implementations allow for unloading items based on a provided id.
  * Items that are already registered to an {@code IStorage} may not be inserted.
  * Implementations may place further restrictions the items that can be inserted, such as a maximum weight that the items
  * can have.
@@ -19,11 +20,19 @@ public interface IStorage<T extends Storable> {
 
     /**
      * Remove an item from this storage, while calling {@code remove()} on the newly removed item.
+     * @return The newly removed item, or {@code null} if no element could be returned
      */
-    void unload();
+    T unload();
 
 
-    void unload(String id);
+    /**
+     * Removes an item from this storage with the specified id, while calling {@code remove()} on the newly removed item.
+     * Certain implementations may throw {@code UnsupportedOperationException}.
+     * @param id
+     * @return The newly removed item, or {@code null} if no element could be returned
+     * @throws UnsupportedOperationException If the implementation does not support id-based item retrieval
+     */
+    T unload(String id);
 
 
     /**
