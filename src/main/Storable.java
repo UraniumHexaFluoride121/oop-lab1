@@ -1,6 +1,6 @@
 package main;
 
-public interface Storable {
+public interface Storable extends HasPosition {
     /**
      * Register this {@code Storable} as being stored in the specified {@code IStorage}.
      * Should only be called from {@code IStorage.load()}.
@@ -23,6 +23,7 @@ public interface Storable {
      *
      * @return The current x position
      */
+    @Override
     double getX();
 
     /**
@@ -31,6 +32,7 @@ public interface Storable {
      *
      * @return The current y position
      */
+    @Override
     double getY();
 
     /**

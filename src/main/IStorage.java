@@ -9,7 +9,7 @@ package main;
  *
  * @param <T> The type of {@code Storable} that can be inserted into this storage
  */
-public interface IStorage<T extends Storable> {
+public interface IStorage<T extends Storable> extends HasPosition {
     /**
      * Add an item to this storage and call {@code store()} on the newly inserted item.
      * In case the item cannot be added, this method should have no effect.
@@ -34,14 +34,15 @@ public interface IStorage<T extends Storable> {
      */
     T unload(String id);
 
-
     /**
      * Returns the storage's x position
      */
+    @Override
     double getX();
 
     /**
      * Returns the storage's y position
      */
+    @Override
     double getY();
 }

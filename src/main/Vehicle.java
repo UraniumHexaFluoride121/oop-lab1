@@ -2,16 +2,13 @@ package main;
 
 import java.awt.*;
 
-public abstract class Vehicle implements Movable, Storable {
+public abstract class Vehicle extends StorableObject implements Movable, Storable {
     private final int nrDoors; // Number of doors on the car
     private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     public final String modelName; // The car model name
     private double angle = 0, x, y;
-    private IStorage<?> storage = null;
-    private final double weight;
-    private final String id;
 
     public Vehicle(int nrDoors, double enginePower, Color color, String modelName, double weight, double x, double y, String licensePlate) {
         this.nrDoors = nrDoors;
@@ -23,14 +20,6 @@ public abstract class Vehicle implements Movable, Storable {
         this.y = y;
         this.id = licensePlate;
         stopEngine();
-    }
-
-    @Override
-    public String getID() {return id;}
-
-    @Override
-    public double getWeight() {
-        return weight;
     }
 
     public int getNrDoors() {
@@ -78,13 +67,13 @@ public abstract class Vehicle implements Movable, Storable {
 
     public double getX() {
         if (isBeingStored())
-            return storage.getX();
+            return super.getX();
         return x;
     }
 
     public double getY() {
         if (isBeingStored())
-            return storage.getY();
+            return super.getY();
         return y;
     }
 
@@ -127,19 +116,9 @@ public abstract class Vehicle implements Movable, Storable {
     }
 
     @Override
-    public void store(IStorage<?> t) {
-        storage = t;
-    }
-
-    @Override
-    public void remove(IStorage<?> t) {
+    public void remove(IStorage<?> t){
         x = getX() - 1;
         y = getY();
-        storage = null;
-    }
-
-    @Override
-    public boolean isBeingStored() {
-        return storage != null;
+        super.remove(t);
     }
 }

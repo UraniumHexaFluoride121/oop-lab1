@@ -1,11 +1,11 @@
-package graphics;
+package mvc;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import static mvc.CarModel.*;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -15,14 +15,10 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame {
-    private static final int X = 800;
-    private static final int Y = 800;
+public class CarController {
 
     // The controller member
-    CarController carC;
-
-    DrawPanel drawPanel = new DrawPanel(X, Y - 240);
+    CarModel carModel;
 
     JPanel controlPanel = new JPanel();
 
@@ -42,22 +38,14 @@ public class CarView extends JFrame {
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc) {
-        this.carC = cc;
-        initComponents(framename);
+    public CarController(CarModel cc, CarView view) {
+        this.carModel = cc;
+        initComponents(view);
     }
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
-    private void initComponents(String title) {
-
-        this.setTitle(title);
-        this.setPreferredSize(new Dimension(X, Y));
-        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
-        this.add(drawPanel);
-
-
+    private void initComponents(CarView drawPanel) {
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -74,7 +62,7 @@ public class CarView extends JFrame {
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
 
-        this.add(gasPanel);
+        drawPanel.add(gasPanel);
 
         controlPanel.setLayout(new GridLayout(2, 4));
 
@@ -84,51 +72,51 @@ public class CarView extends JFrame {
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
-        controlPanel.setPreferredSize(new Dimension((X / 2) + 4, 200));
-        this.add(controlPanel);
+        controlPanel.setPreferredSize(new Dimension((CarModel.getWidth() / 2) + 4, 200));
+        drawPanel.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
-        this.add(startButton);
+        startButton.setPreferredSize(new Dimension(CarModel.getWidth() / 5 - 15, 200));
+        drawPanel.add(startButton);
 
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
-        this.add(stopButton);
+        stopButton.setPreferredSize(new Dimension(CarModel.getWidth() / 5 - 15, 200));
+        drawPanel.add(stopButton);
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
-        startButton.addActionListener(e -> carC.startEngine());
+        startButton.addActionListener(e -> carModel.startEngine());
 
-        stopButton.addActionListener(e -> carC.stopEngine());
+        stopButton.addActionListener(e -> carModel.stopEngine());
 
-        gasButton.addActionListener(e -> carC.gas(gasAmount));
+        gasButton.addActionListener(e -> carModel.gas(gasAmount));
 
-        brakeButton.addActionListener(e -> carC.brake(gasAmount));
+        brakeButton.addActionListener(e -> carModel.brake(gasAmount));
 
-        turboOnButton.addActionListener(e -> carC.turboOn());
+        turboOnButton.addActionListener(e -> carModel.turboOn());
 
-        turboOffButton.addActionListener(e -> carC.turboOff());
+        turboOffButton.addActionListener(e -> carModel.turboOff());
 
-        liftBedButton.addActionListener(e -> carC.raise());
+        liftBedButton.addActionListener(e -> carModel.raise());
 
-        lowerBedButton.addActionListener(e -> carC.lower());
+        lowerBedButton.addActionListener(e -> carModel.lower());
 
 
         // Make the frame pack all it's components by respecting the sizes if possible.
-        this.pack();
+        drawPanel.pack();
 
         // Get the computer screen resolution
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         // Center the frame
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        drawPanel.setLocation(dim.width / 2 - drawPanel.getSize().width / 2, dim.height / 2 - drawPanel.getSize().height / 2);
         // Make the frame visible
-        this.setVisible(true);
+        drawPanel.setVisible(true);
         // Make sure the frame exits when "x" is pressed
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        drawPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
