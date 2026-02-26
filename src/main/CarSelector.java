@@ -4,6 +4,7 @@ import mvc.CarController;
 import mvc.CarModel;
 
 import java.awt.*;
+import java.awt.event.ItemEvent;
 
 public class CarSelector {
     private int latestIndex = -1;
@@ -32,7 +33,8 @@ public class CarSelector {
         comp.add("Saab");
         comp.add("Scania");
         comp.addItemListener(l -> {
-            latestIndex = (int) l.getItem();
+            if (l.getStateChange() == ItemEvent.SELECTED)
+                latestIndex = (int) l.getItem();
         });
         controller.addComponent(comp);
     }
