@@ -31,6 +31,7 @@ public class CarController {
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    private CarView view;
 
     // Constructor
     public CarController(CarModel cc, CarView view) {
@@ -41,6 +42,7 @@ public class CarController {
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(CarView drawPanel) {
+        view = drawPanel;
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -59,7 +61,7 @@ public class CarController {
 
         drawPanel.add(gasPanel);
 
-        controlPanel.setLayout(new GridLayout(2, Integer.MAX_VALUE));
+        controlPanel.setLayout(new GridLayout(2, 4));
 
         addButton("Gas", e -> carModel.gas(gasAmount));
         addButton("Saab Turbo on", e -> carModel.turboOn());
@@ -68,20 +70,20 @@ public class CarController {
         addButton("Saab Turbo off", e -> carModel.turboOff());
         addButton("Lower Lift Bed", e -> carModel.lower());
 
-        controlPanel.setPreferredSize(new Dimension((CarModel.getWidth() / 2) + 4, 200));
+        controlPanel.setPreferredSize(new Dimension((int) (CarModel.getWidth() * 0.60f), 200));
         drawPanel.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(CarModel.getWidth() / 5 - 15, 200));
+        startButton.setPreferredSize(new Dimension(CarModel.getWidth() / 6 - 22, 200));
         drawPanel.add(startButton);
 
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(CarModel.getWidth() / 5 - 15, 200));
+        stopButton.setPreferredSize(new Dimension(CarModel.getWidth() / 6 - 22, 200));
         drawPanel.add(stopButton);
 
         // Make the frame pack all it's components by respecting the sizes if possible.
@@ -97,9 +99,15 @@ public class CarController {
         drawPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+
     public void addButton(String text, ActionListener action) {
         JButton button = new JButton(text);
-        controlPanel.add(button, index++);
         button.addActionListener(action);
+        addComponent(button);
+    }
+
+    public void addComponent(Component comp) {
+        controlPanel.add(comp, index++);
+        view.pack();
     }
 }

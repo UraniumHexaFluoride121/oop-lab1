@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class CarView extends JFrame implements Consumer<ArrayList<DrawableData>> {
     private ArrayList<DrawableData> data = new ArrayList<>();
-    private JPanel panel = new JPanel() {
+    private final JPanel panel = new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
