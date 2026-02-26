@@ -22,7 +22,7 @@ public class Main {
         model.addCar("Saab95", CarFactory.saab95(0, 100, "2"));
         model.addCar("Scania", CarFactory.scania(0, 200, "3"));
 
-        model.addWorkshop("VolvoBrand", new Workshop<>(3, 20, 300, 300, Volvo240.class));
+        model.addWorkshop("VolvoBrand", new Workshop<>(20, 20, 300, 300, Volvo240.class));
 
         // Start the timer
         model.startTimer();
