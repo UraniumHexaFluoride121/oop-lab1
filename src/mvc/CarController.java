@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 import static mvc.CarModel.*;
 
@@ -25,14 +26,8 @@ public class CarController {
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
+    private int index = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
-
-    JButton gasButton = new JButton("Gas");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -64,14 +59,15 @@ public class CarController {
 
         drawPanel.add(gasPanel);
 
-        controlPanel.setLayout(new GridLayout(2, 4));
+        controlPanel.setLayout(new GridLayout(2, Integer.MAX_VALUE));
 
-        controlPanel.add(gasButton, 0);
-        controlPanel.add(turboOnButton, 1);
-        controlPanel.add(liftBedButton, 2);
-        controlPanel.add(brakeButton, 3);
-        controlPanel.add(turboOffButton, 4);
-        controlPanel.add(lowerBedButton, 5);
+        addButton("Gas", e -> carModel.gas(gasAmount));
+        addButton("Saab Turbo on", e -> carModel.turboOn());
+        addButton("Scania Lift Bed", e -> carModel.raise());
+        addButton("Break", e -> carModel.brake(gasAmount));
+        addButton("Saab Turbo off", e -> carModel.turboOff());
+        addButton("Lower Lift Bed", e -> carModel.lower());
+
         controlPanel.setPreferredSize(new Dimension((CarModel.getWidth() / 2) + 4, 200));
         drawPanel.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -88,25 +84,6 @@ public class CarController {
         stopButton.setPreferredSize(new Dimension(CarModel.getWidth() / 5 - 15, 200));
         drawPanel.add(stopButton);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-        startButton.addActionListener(e -> carModel.startEngine());
-
-        stopButton.addActionListener(e -> carModel.stopEngine());
-
-        gasButton.addActionListener(e -> carModel.gas(gasAmount));
-
-        brakeButton.addActionListener(e -> carModel.brake(gasAmount));
-
-        turboOnButton.addActionListener(e -> carModel.turboOn());
-
-        turboOffButton.addActionListener(e -> carModel.turboOff());
-
-        liftBedButton.addActionListener(e -> carModel.raise());
-
-        lowerBedButton.addActionListener(e -> carModel.lower());
-
-
         // Make the frame pack all it's components by respecting the sizes if possible.
         drawPanel.pack();
 
@@ -118,5 +95,11 @@ public class CarController {
         drawPanel.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         drawPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void addButton(String text, ActionListener action) {
+        JButton button = new JButton(text);
+        controlPanel.add(button, index++);
+        button.addActionListener(action);
     }
 }

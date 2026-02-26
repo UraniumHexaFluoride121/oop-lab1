@@ -43,15 +43,24 @@ public class CarModel {
         BufferedImage image;
         try {
             image = ImageIO.read(CarView.class.getResourceAsStream("/pics/" + imageName + ".jpg"));
-        } catch (IOException e) { // "catch (IOException e) " Om den inte hittar filen, thore Exaption. Typs som "raise error" i python
+        } catch (
+                IOException e) { // "catch (IOException e) " Om den inte hittar filen, thore Exaption. Typs som "raise error" i python
             throw new RuntimeException("Image not found: " + imageName);
         }
         hitboxData.put(obj, new HitboxData(image, new Dimension(image.getWidth(), image.getHeight())));
     }
 
     public void addCar(String imageName, Vehicle vehicle) {
+        if (cars.size() >= 10)
+            return;
         cars.add(vehicle); // CarContltrllers lista.  "Säger till CarController att läga till den nya bil i sin lisat"
         addHitbox(imageName, vehicle);
+    }
+
+    public Vehicle removeCar() {
+        if (cars.isEmpty())
+            return null;
+        return cars.remove((int) (Math.random() * cars.size()));
     }
 
     public void addWorkshop(String imageName, Workshop<?> workshop) {

@@ -16,6 +16,12 @@ public class Main {
 
         // Start a new view and send a reference of self
         CarController controller = new CarController(model, view);
+        controller.addButton("Add Car", e -> {
+            model.addCar("Volvo240", CarFactory.volvo240(0, (float) (Math.random() * CarModel.getHeight() - 100), "test"));
+        });
+        controller.addButton("Remove Car", e -> {
+            model.removeCar();
+        });
 
         model.addCar("Volvo240", CarFactory.volvo240(0, 280, "1"));
         model.addCar("Saab95", CarFactory.saab95(0, 100, "2"));
